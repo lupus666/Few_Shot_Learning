@@ -1,0 +1,7 @@
+
+*.zip
+*.pickle
+/data/
+/images_background/
+/images_evaluation/
+/save_weight/
