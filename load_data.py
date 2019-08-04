@@ -36,7 +36,7 @@ def loadimgs(path, n=0):
         # every letter/category has it's own column in the array, so  load seperately
         for letter in os.listdir(alphabet_path):
             cat_dict[curr_y] = (alphabet, letter)
-            category_images=[]
+            category_images = []
             letter_path = os.path.join(alphabet_path, letter)
             for filename in os.listdir(letter_path):
                 image_path = os.path.join(letter_path, filename)

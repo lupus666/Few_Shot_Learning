@@ -34,11 +34,12 @@ np.set_printoptions(threshold=sys.maxsize)
 
 evaluate_every = 10  # interval for evaluating on one-shot tasks
 loss_every = 20  # interval for printing loss (iterations)
-batch_size = 32
+batch_size = 64  # 32 to 64 
 n_iter = 20000
 N_way = 20  # how many classes for testing one-shot tasks>
 n_val = 250  # how many one-shot tasks to validate on?
 best = -1
+
 
 def initialize_weights(shape, name=None):
     """
@@ -91,7 +92,7 @@ model = get_siamese_model((105, 105, 1))
 model.summary()
 
 optimizer = Adam(lr=0.00006)
-model.compile(loss="binary_crossentropy",optimizer=optimizer)
+model.compile(loss="binary_crossentropy", optimizer=optimizer)
 
 
 class SiameseLoader:
@@ -210,7 +211,7 @@ def concat_images(X):
 
 def plot_oneshot_task(pairs):
     fig, (ax1, ax2) = plt.subplots(2)
-    ax1.matshow(pairs[0][0].reshape(105,105), cmap='gray')
+    ax1.matshow(pairs[0][0].reshape(105, 105), cmap='gray')
     img = concat_images(pairs[1])
     ax1.get_yaxis().set_visible(False)
     ax1.get_xaxis().set_visible(False)
@@ -223,28 +224,29 @@ def plot_oneshot_task(pairs):
 # pairs, targets = loader.make_oneshot_task(20, "train", "Japanese_(katakana)")
 # plot_oneshot_task(pairs)
 
-weights_path = 'save_weight/'
-# print("Starting training process!")
-# print("-------------------------------------")
-# t_start = time.time()
-# for i in range(1, n_iter):
-#     (inputs, targets) = loader.get_batch(batch_size)
-#     loss = model.train_on_batch(inputs, targets)
-#     print("\n ------------- \n")
-#     print("Loss: {0}".format(loss))
-#     if i % evaluate_every == 0:
-#         print("Time for {0} iterations: {1}".format(i, time.time() - t_start))
-#         val_acc = loader.test_oneshot(model, N_way, n_val, verbose=True)
-#         if val_acc >= best:
-#             print("Current best: {0}, previous best: {1}".format(val_acc, best))
-#             print("Saving weights to: {0} \n".format(weights_path))
-#             model.save_weights(filepath=os.path.join(weights_path, 'model_weights.h5'))
-#             best = val_acc
-#
-#     if i % loss_every == 0:
-#         print("iteration {}, training loss: {:.2f},".format(i, loss))
 
-weights_path_2 = os.path.join(weights_path, "model_weights.h5")
+weights_path = 'save_weight/'
+print("Starting training process!")
+print("-------------------------------------")
+t_start = time.time()
+for i in range(1, n_iter):
+    (inputs, targets) = loader.get_batch(batch_size)
+    loss = model.train_on_batch(inputs, targets)
+    print("\n ------------- \n")
+    print("Loss: {0}".format(loss))
+    if i % evaluate_every == 0:
+        print("Time for {0} iterations: {1}".format(i, time.time() - t_start))
+        val_acc = loader.test_oneshot(model, N_way, n_val, verbose=True)
+        if val_acc >= best:
+            print("Current best: {0}, previous best: {1}".format(val_acc, best))
+            print("Saving weights to: {0} \n".format(weights_path))
+            model.save_weights(filepath=os.path.join(weights_path, 'model_weights_64.h5'))
+            best = val_acc
+
+    if i % loss_every == 0:
+        print("iteration {}, training loss: {:.2f},".format(i, loss))
+
+weights_path_2 = os.path.join(weights_path, "model_weights_64.h5")
 model.load_weights(weights_path_2)
 
 
