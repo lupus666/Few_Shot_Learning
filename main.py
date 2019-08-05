@@ -270,7 +270,7 @@ t_start = time.time()
 #     if i % loss_every == 0:
 #         print("iteration {}, training loss: {:.2f},".format(i, loss))
 
-weights_path_2 = os.path.join(weights_path, "model_weights.h5")
+weights_path_2 = os.path.join(weights_path, "model_weights_64_data_aug.h5")
 model.load_weights(weights_path_2)
 
 
