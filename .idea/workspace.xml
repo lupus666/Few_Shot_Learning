@@ -16,20 +16,18 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="185">
-              <caret line="272" column="75" selection-start-line="272" selection-start-column="75" selection-end-line="272" selection-end-column="75" />
+            <state relative-caret-position="391">
+              <caret line="272" lean-forward="true" selection-start-line="272" selection-end-line="272" />
               <folding>
                 <element signature="e#0#35#0" expanded="true" />
                 <element signature="e#1378#1620#0" />
                 <element signature="e#1666#1905#0" />
-                <element signature="e#1948#3560#0" />
                 <element signature="e#3871#4256#0" />
                 <element signature="e#4314#5635#0" />
                 <element signature="e#5692#5873#0" />
                 <element signature="e#5943#7174#0" />
                 <element signature="e#8075#8468#0" />
                 <element signature="e#8505#8797#0" />
-                <element signature="e#9523#9591#0" />
                 <element signature="e#9978#10331#0" />
                 <element signature="e#10386#10774#0" />
               </folding>
@@ -60,8 +58,8 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>best</find>
       <find>argmax</find>
+      <find>best</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -88,11 +86,11 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
-    <option name="x" value="382" />
-    <option name="y" value="1" />
-    <option name="width" value="974" />
-    <option name="height" value="1047" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1936" />
+    <option name="height" value="1056" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -106,11 +104,6 @@
             <path>
               <item name="Few_Shot_Learning" type="b2602c69:ProjectViewProjectNode" />
               <item name="Few_Shot_Learning" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Few_Shot_Learning" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Few_Shot_Learning" type="462c0819:PsiDirectoryNode" />
-              <item name="save_weight" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Few_Shot_Learning" type="b2602c69:ProjectViewProjectNode" />
@@ -175,15 +168,15 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24973656" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24973656" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.37201735" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.28524947" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4175705" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -254,20 +247,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="185">
-          <caret line="272" column="75" selection-start-line="272" selection-start-column="75" selection-end-line="272" selection-end-column="75" />
+        <state relative-caret-position="391">
+          <caret line="272" lean-forward="true" selection-start-line="272" selection-end-line="272" />
           <folding>
             <element signature="e#0#35#0" expanded="true" />
             <element signature="e#1378#1620#0" />
             <element signature="e#1666#1905#0" />
-            <element signature="e#1948#3560#0" />
             <element signature="e#3871#4256#0" />
             <element signature="e#4314#5635#0" />
             <element signature="e#5692#5873#0" />
             <element signature="e#5943#7174#0" />
             <element signature="e#8075#8468#0" />
             <element signature="e#8505#8797#0" />
-            <element signature="e#9523#9591#0" />
             <element signature="e#9978#10331#0" />
             <element signature="e#10386#10774#0" />
           </folding>

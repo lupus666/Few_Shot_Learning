@@ -1,8 +1,8 @@
 from keras.models import Sequential
 import sys
 import time
-from keras.optimizers import Adam
-from keras.layers import Conv2D, ZeroPadding2D, Activation, Input, concatenate
+from keras.optimizers import Adam, SGD
+from keras.layers import Conv2D, ZeroPadding2D, Activation, Input, concatenate, Dropout
 from keras.models import Model
 import seaborn as sns
 from keras.layers.normalization import BatchNormalization
@@ -32,9 +32,9 @@ from load_data import *
 K.set_image_data_format('channels_last')
 
 datagen = ImageDataGenerator(
-    featurewise_center=True,
-    featurewise_std_normalization=True,
-    zca_whitening=True,
+    # featurewise_center=True,
+    # featurewise_std_normalization=True,
+    # zca_whitening=True,
     rotation_range=10,  # randomly rotate images in the range (degrees, 0 to 180)
     shear_range=0.2,  # set range for random shear
     zoom_range=0.1,  # set range for random zoom
@@ -94,6 +94,7 @@ def get_siamese_model(input_shape):
     model.add(Flatten())
     model.add(Dense(4096, activation='sigmoid', kernel_regularizer=l2(1e-3),
                     kernel_initializer=initialize_weights,bias_initializer=initialize_bias))
+    model.add(Dropout(0.4))
     encoded_l = model(left_input)
     encoded_r = model(right_input)
     L1_layer = Lambda(lambda tensors: K.abs(tensors[0] - tensors[1]))
@@ -105,7 +106,7 @@ def get_siamese_model(input_shape):
 
 model = get_siamese_model((105, 105, 1))
 model.summary()
-
+# optimizer = SGD(0.0004, momentum=0.6, nesterov=True, decay=0.0003 // n_iter)
 optimizer = Adam(lr=0.00006)
 model.compile(loss="binary_crossentropy", optimizer=optimizer)
 
@@ -245,32 +246,32 @@ print("Starting training process!")
 print("-------------------------------------")
 t_start = time.time()
 
-# weights_path_0 = os.path.join(weights_path, "model_weights_64.h5")
+# weights_path_0 = os.path.join(weights_path, "model_weights_64_data_aug.h5")
 # model.load_weights(weights_path_0)
 
-# for i in range(1, n_iter):
-#     (inputs, targets) = loader.get_batch(batch_size)
-#     # loss = model.train_on_batch(inputs, targets)
-#     # datagen.fit(inputs[0])
-#     # datagen.fit(inputs[1])
-#     his = model.fit_generator(generator=datagen.flow(x=inputs, y=targets, batch_size=batch_size), steps_per_epoch=1, verbose=2)
-#     # his = model.fit_generator(loader.generate(batch_size), steps_per_epoch=1)
-#     loss = his.history['loss'][0]
-#     # print("\n ------------- \n")
-#     # print("Loss: {0}".format(loss))
-#     if i % evaluate_every == 0:
-#         print("Time for {0} iterations: {1}".format(i, time.time() - t_start))
-#         val_acc = loader.test_oneshot(model, N_way, n_val, verbose=True)
-#         if val_acc >= best:
-#             print("Current best: {0}, previous best: {1}".format(val_acc, best))
-#             print("Saving weights to: {0} \n".format(weights_path))
-#             model.save_weights(filepath=os.path.join(weights_path, 'model_weights_64_data_aug.h5'))
-#             best = val_acc
-#
-#     if i % loss_every == 0:
-#         print("iteration {}, training loss: {:.2f},".format(i, loss))
+for i in range(1, n_iter):
+    (inputs, targets) = loader.get_batch(batch_size)
+    # loss = model.train_on_batch(inputs, targets)
+    # datagen.fit(inputs[0])
+    # datagen.fit(inputs[1])
+    his = model.fit_generator(generator=datagen.flow(x=inputs, y=targets, batch_size=batch_size), steps_per_epoch=1, verbose=2)
+    # his = model.fit_generator(loader.generate(batch_size), steps_per_epoch=1)
+    loss = his.history['loss'][0]
+    # print("\n ------------- \n")
+    # print("Loss: {0}".format(loss))
+    if i % evaluate_every == 0:
+        print("Time for {0} iterations: {1}".format(i, time.time() - t_start))
+        val_acc = loader.test_oneshot(model, N_way, n_val, verbose=True)
+        if val_acc >= best:
+            print("Current best: {0}, previous best: {1}".format(val_acc, best))
+            print("Saving weights to: {0} \n".format(weights_path))
+            model.save_weights(filepath=os.path.join(weights_path, 'model_weights_64_dropout.h5'))
+            best = val_acc
 
-weights_path_2 = os.path.join(weights_path, "model_weights_64_data_aug.h5")
+    if i % loss_every == 0:
+        print("iteration {}, training loss: {:.2f},".format(i, loss))
+
+weights_path_2 = os.path.join(weights_path, "model_weights_64_dropout.h5")
 model.load_weights(weights_path_2)
 
 
