@@ -93,7 +93,7 @@ def get_siamese_model(input_shape):
                      bias_initializer=initialize_bias, kernel_regularizer=l2(2e-4)))
     model.add(Flatten())
     model.add(Dense(4096, activation='sigmoid', kernel_regularizer=l2(1e-3),
-                    kernel_initializer=initialize_weights,bias_initializer=initialize_bias))
+                    kernel_initializer=initialize_weights, bias_initializer=initialize_bias))
     model.add(Dropout(0.4))
     encoded_l = model(left_input)
     encoded_r = model(right_input)
@@ -246,7 +246,7 @@ print("Starting training process!")
 print("-------------------------------------")
 t_start = time.time()
 
-# weights_path_0 = os.path.join(weights_path, "model_weights_64_data_aug.h5")
+# weights_path_0 = os.path.join(weights_path, "model_weights_64_dropout.h5")
 # model.load_weights(weights_path_0)
 
 for i in range(1, n_iter):
