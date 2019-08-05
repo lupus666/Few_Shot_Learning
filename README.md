@@ -38,6 +38,7 @@
 - 增加batch_size  
   ![batch_size](https://github.com/lupus666/Few_Shot_Learning/raw/master/image/batch_size.png)
 - 在增加batch_size基础上采用数据增强  
-  ![data_aug](https://github.com/lupus666/Few_Shot_Learning/raw/master/image/data_aug.png)
+  ![data_aug](https://github.com/lupus666/Few_Shot_Learning/raw/master/image/data_aug.png)  
 
+可以看到增加batch_size稍有提升，但是三者几乎没有多少差别，从某种程度上来看，数据增强甚至起到了反作用，但有可能也是因为epochs不够多。而且三者都存在着过拟合的情况，虽然已经使用了l2正则化的方法，但依然可以尝试着使用*Dropout*的方法
 
