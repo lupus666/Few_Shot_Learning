@@ -15,7 +15,7 @@ from keras.optimizers import *
 from keras.engine.topology import Layer
 from keras import backend as K
 from keras.regularizers import l2
-K.set_image_data_format('channels_last')
+from keras_preprocessing.image import ImageDataGenerator
 import cv2
 import os
 from skimage import io
@@ -29,12 +29,27 @@ import numpy.random as rng
 from sklearn.utils import shuffle
 from load_data import *
 
+K.set_image_data_format('channels_last')
+
+datagen = ImageDataGenerator(
+    featurewise_center=True,
+    featurewise_std_normalization=True,
+    zca_whitening=True,
+    rotation_range=10,  # randomly rotate images in the range (degrees, 0 to 180)
+    shear_range=0.2,  # set range for random shear
+    zoom_range=0.1,  # set range for random zoom
+    width_shift_range=0.2,
+    height_shift_range=0.2,
+    horizontal_flip=False,  # randomly flip images
+    vertical_flip=False,  # randomly flip images
+    # rescale=1. / 255,
+)
 
 np.set_printoptions(threshold=sys.maxsize)
 
 evaluate_every = 10  # interval for evaluating on one-shot tasks
 loss_every = 20  # interval for printing loss (iterations)
-batch_size = 64  # 32 to 64 
+batch_size = 64  # 32 to 64
 n_iter = 20000
 N_way = 20  # how many classes for testing one-shot tasks>
 n_val = 250  # how many one-shot tasks to validate on?
@@ -229,24 +244,33 @@ weights_path = 'save_weight/'
 print("Starting training process!")
 print("-------------------------------------")
 t_start = time.time()
-for i in range(1, n_iter):
-    (inputs, targets) = loader.get_batch(batch_size)
-    loss = model.train_on_batch(inputs, targets)
-    print("\n ------------- \n")
-    print("Loss: {0}".format(loss))
-    if i % evaluate_every == 0:
-        print("Time for {0} iterations: {1}".format(i, time.time() - t_start))
-        val_acc = loader.test_oneshot(model, N_way, n_val, verbose=True)
-        if val_acc >= best:
-            print("Current best: {0}, previous best: {1}".format(val_acc, best))
-            print("Saving weights to: {0} \n".format(weights_path))
-            model.save_weights(filepath=os.path.join(weights_path, 'model_weights_64.h5'))
-            best = val_acc
 
-    if i % loss_every == 0:
-        print("iteration {}, training loss: {:.2f},".format(i, loss))
+# weights_path_0 = os.path.join(weights_path, "model_weights_64.h5")
+# model.load_weights(weights_path_0)
 
-weights_path_2 = os.path.join(weights_path, "model_weights_64.h5")
+# for i in range(1, n_iter):
+#     (inputs, targets) = loader.get_batch(batch_size)
+#     # loss = model.train_on_batch(inputs, targets)
+#     # datagen.fit(inputs[0])
+#     # datagen.fit(inputs[1])
+#     his = model.fit_generator(generator=datagen.flow(x=inputs, y=targets, batch_size=batch_size), steps_per_epoch=1, verbose=2)
+#     # his = model.fit_generator(loader.generate(batch_size), steps_per_epoch=1)
+#     loss = his.history['loss'][0]
+#     # print("\n ------------- \n")
+#     # print("Loss: {0}".format(loss))
+#     if i % evaluate_every == 0:
+#         print("Time for {0} iterations: {1}".format(i, time.time() - t_start))
+#         val_acc = loader.test_oneshot(model, N_way, n_val, verbose=True)
+#         if val_acc >= best:
+#             print("Current best: {0}, previous best: {1}".format(val_acc, best))
+#             print("Saving weights to: {0} \n".format(weights_path))
+#             model.save_weights(filepath=os.path.join(weights_path, 'model_weights_64_data_aug.h5'))
+#             best = val_acc
+#
+#     if i % loss_every == 0:
+#         print("iteration {}, training loss: {:.2f},".format(i, loss))
+
+weights_path_2 = os.path.join(weights_path, "model_weights.h5")
 model.load_weights(weights_path_2)
 
 
@@ -282,6 +306,8 @@ for N in ways:
     val_accs.append(loader.test_oneshot(model, N, trials, "val", verbose=True))
     train_accs.append(loader.test_oneshot(model, N, trials, "train", verbose=True))
     nn_accs.append(test_nn_accuracy(N, trials, loader))
+
+print(np.mean(val_accs))
 
 # plot the accuracy vs num categories for each
 plt.plot(ways, val_accs, "m")
