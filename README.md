@@ -46,6 +46,6 @@
 - 在上述基础上增加*Dropout*  
   ![dropout](https://github.com/lupus666/Few_Shot_Learning/raw/master/image/dropout.png)  
 
-可以看到性能有了较明显的提升
+可以看到性能有了较明显的提升，而且过拟合问题有所减缓
 
 
