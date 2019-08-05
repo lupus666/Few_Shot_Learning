@@ -35,7 +35,7 @@
 #### 结果
 - 原始结果  
   ![base](https://github.com/lupus666/Few_Shot_Learning/raw/master/image/base.png)
-- 增加batch_size  
+- 增加batch_size（32 to 64）  
   ![batch_size](https://github.com/lupus666/Few_Shot_Learning/raw/master/image/batch_size.png)
 - 在增加batch_size基础上采用数据增强  
   ![data_aug](https://github.com/lupus666/Few_Shot_Learning/raw/master/image/data_aug.png)  
