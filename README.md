@@ -32,6 +32,7 @@
 - 增加batch_size（增加迭代次数）
 - 采用数据增强的方法
 - 尝试使用SGD的Optimizer，但是效果并不理想，因此也没有记录相关结果
+- 使用*Dropout*正则化
 
 #### 结果
 - 原始结果  
@@ -42,4 +43,9 @@
   ![data_aug](https://github.com/lupus666/Few_Shot_Learning/raw/master/image/data_aug.png)  
 
 可以看到增加batch_size稍有提升，但是三者几乎没有多少差别，从某种程度上来看，数据增强甚至起到了反作用，但有可能也是因为epochs不够多。而且三者都存在着过拟合的情况，虽然已经使用了l2正则化的方法，但依然可以尝试着使用*Dropout*的方法
+- 在上述基础上增加*Dropout*  
+  ![dropout](https://github.com/lupus666/Few_Shot_Learning/raw/master/image/dropout.png)  
+
+可以看到性能有了较明显的提升
+
 
